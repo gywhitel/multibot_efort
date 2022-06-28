@@ -8,7 +8,8 @@ source devel/setup.bash
 # 运行仿真
 roslaunch multibot_efort display.launch
 ```
-运行视频
-<video>
-  <source src="https://github.com/gywhitel/multibot_efort/blob/master/triarm.mp4" type="video/mp4">
-</video>
+
+实际运行视频
+
+https://user-images.githubusercontent.com/30773068/176194743-e1457d3a-dc87-48aa-a6f6-5a7bd8d2ce1a.mp4
+
