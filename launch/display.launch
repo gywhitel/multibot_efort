@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="limited" default="true" doc="If false, joint range [-2*PI, 2*PI] on all joint" />
+  
+  <include file="$(find multibot_efort)/launch/cloud_view.launch"/> 
+  
+  <param if="$(arg limited)" name="robot_description" command="$(find xacro)/xacro  '$(find multibot_efort)/urdf/tribot.urdf.xacro'"/>  
+  <!-- <param if="$(arg limited)" name="robot_description" command="$(find xacro)/xacro '$(find multibot_efort)/urdf/assembly.urdf.xacro'"/>   -->
+  
+  <!-- <param name="/use_sim_time" value="true"/> -->
+
+  <node name="rviz"  pkg="rviz"  type="rviz"  required="true" args="-d $(find multibot_efort)/config/tri-bot.rviz"/>
+  
+  
+  <node pkg="tf2_ros" type="static_transform_publisher" name="left_transformer" args="0.09 0 0 0 1.57 0 left_link_6 left_EE" />
+  
+  <node pkg="tf2_ros" type="static_transform_publisher" name="right_transformer" args="0.09 0 0 0 1.57 0 right_link_6 right_EE" />
+  
+  <node pkg="tf2_ros" type="static_transform_publisher" name="robot3_transformer" args="0.30 0 0 0 1.57 0 mid_link_6 mid_EE" />
+  
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  
+  <node pkg="tf2_ros" type="static_transform_publisher" name="world_origin" args="0 0 0 0 0 0 map world" />
+  
+  <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/> -->
+
+  <node name="joint_state_publisher"  pkg="multibot_efort"  type="path_planner" args="$(find multibot_efort)/data/omega.pcd" output="screen"/>
+
+  <!-- <node name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" /> -->
+
+  <!-- <node name="distance_display" pkg="multibot_efort" type="display_distance" respawn="true" output="screen"/> -->
+
+
+  <node name="joint_angle_plot" pkg="rqt_plot" type="rqt_plot" args="/joint_states/position[0]:position[1]:position[2]:position[3]:position[4]:position[5]:position[6]:position[7]:position[8]:position[9]:position[10]:position[11]:position[12]:position[13]:position[14]:position[15]"/>
+  <!-- <node name="joint_angle_plot" pkg="rqt_plot" type="rqt_plot" args="/joint_states/position[6]:position[7]:position[8]:position[9]:position[10]:position[11]:position[12]:position[13]:position[14]:position[15]"/> -->
+
+</launch>

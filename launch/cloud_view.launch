@@ -1,0 +1,13 @@
+<launch>
+    <!-- <arg name="data" default="$(find multibot_efort)/data/steel_preprocess.pcd"/> -->
+    <arg name="visual" default="$(find multibot_efort)/data/workpiece2.pcd"/>
+    <!-- <arg name="data" default="$(find multibot_efort)/data/large_piece.pcd"/> -->
+    
+    <!-- <arg name="cloud_robot3" default="1.2 0 1.0 1.57 0 3.14" /> -->
+    
+    <node pkg="multibot_efort" name="cloud_view" type="cloud_view" args="$(arg visual)" output="screen"/>
+    
+    <!-- <arg name="data"/> -->
+    <!-- <node pkg="tf2_ros"  type="static_transform_publisher" name="transformer1" args="$(arg cloud_robot3) mid_base_link pointcloud"/> -->
+
+</launch>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <!-- 需要两台，需要左右前缀-->
+    <xacro:macro name="er20" 
+                 params="prefix joint_limited
+                         link_1_lower_limit:=-3.0543 link_1_upper_limit:=3.0543
+                         link_2_lower_limit:=-2.4784 link_2_upper_limit:=1.117
+                         link_3_lower_limit:=-1.2741 link_3_upper_limit:=2.618
+                         link_4_lower_limit:=-3.1067 link_4_upper_limit:=3.1067
+                         link_5_lower_limit:=-2.3038 link_5_upper_limit:=2.3038
+                         link_6_lower_limit:=-12.566 link_6_upper_limit:=12.566">
+        <!-- 定义质量,SW中没有定义材质，值存在问题-->
+        <xacro:property name="base_link_mass" value="26.887"/>
+        <xacro:property name="link_1_mass" value="26.887"/>
+        <xacro:property name="link_2_mass" value="26.887"/>
+        <xacro:property name="link_3_mass" value="0.044815"/>
+        <xacro:property name="link_4_mass" value="26.887"/>
+        <xacro:property name="link_5_mass" value="26.887"/>
+        <xacro:property name="link_6_mass" value="26.887"/>
+
+        <link name="${prefix}_base_link">
+            <inertial>
+              <origin xyz="0.17709 0.15738 0.51058"
+                      rpy="0 0 0" />
+              <mass value="${base_link_mass}" />
+              <inertia ixx="7.994" ixy="0.1741" ixz="-2.937"
+                       iyy="8.7913" iyz="0.25399" izz="2.7535" />
+            </inertial>
+        
+            <visual>
+              <geometry>
+                <mesh
+                  filename="package://multibot_efort/meshes/er20/base_link.STL" />
+              </geometry>
+              <material name="Orange"/>
+            </visual>
+        
+            <collision>
+              <geometry>
+                <mesh
+                  filename="package://multibot_efort/meshes/er20/base_link.STL" />
+              </geometry>
+            </collision>
+          </link>
+        
+          <link name="${prefix}_link_1">
+            <inertial>
+              <origin xyz="0.17709 0.15738 0.24258"
+                      rpy="0 0 0" />
+              <mass value="${link_1_mass}" />
+              <inertia ixx="7.994" ixy="0.1741" ixz="-2.937"
+                       iyy="8.7913" iyz="0.25399" izz="2.7535" />
+            </inertial>
+        
+            <visual>
+              <geometry>
+                <mesh filename="package://multibot_efort/meshes/er20/link_1.STL" />
+              </geometry>
+              <material name="Orange"/>
+            </visual>
+        
+            <collision>
+              <geometry>
+                <mesh
+                  filename="package://multibot_efort/meshes/er20/link_1.STL" />
+              </geometry>
+            </collision>
+          </link>
+        
+          <joint name="${prefix}_joint_1" type="revolute">
+            <origin xyz="0 0 0.268"
+                    rpy="0 0 0" />
+            <parent link="${prefix}_base_link" />
+            <child link="${prefix}_link_1" />
+            <axis xyz="0 0 1" />
+            <xacro:unless value="${joint_limited}">
+                <limit lower="${-2.0 * pi}" upper="${2.0 *pi}" effort="42" velocity="2.9671" />
+            </xacro:unless>
+            <xacro:if value="${joint_limited}">
+                <limit lower="${link_1_lower_limit}" upper="${link_1_upper_limit}" effort="42" velocity="2.9671" />
+            </xacro:if>
+          </joint>
+        
+          <link name="${prefix}_link_2">
+            <inertial>
+              <origin xyz="0.0070856 0.15738 0.0075837"
+                      rpy="0 0 0" />
+              <mass value="${link_2_mass}" />
+              <inertia ixx="7.994" ixy="0.1741" ixz="-2.937"
+                       iyy="8.7913" iyz="0.25399" izz="2.7535" />
+            </inertial>
+        
+            <visual>
+              <geometry>
+                <mesh filename="package://multibot_efort/meshes/er20/link_2.STL" />
+              </geometry>
+              <material name="Orange"/>
+            </visual>
+        
+            <collision>
+              <geometry>
+                <mesh filename="package://multibot_efort/meshes/er20/link_2.STL" />
+              </geometry>
+            </collision>
+          </link>
+        
+          <joint name="${prefix}_joint_2" type="revolute">
+            <origin xyz="0.17 0 0.235"
+                    rpy="0 0 0" />
+            <parent link="${prefix}_link_1" />
+            <child link="${prefix}_link_2" />
+            <axis  xyz="0 -1 0" />
+
+            <xacro:unless value="${joint_limited}">
+                <limit lower="${-2.0 * pi}" upper="${2.0 *pi}" effort="42" velocity="2.618" />
+            </xacro:unless>
+            <xacro:if value="${joint_limited}">
+                <limit lower="${link_2_lower_limit}" upper="${link_2_upper_limit}" effort="42" velocity="2.618" />
+            </xacro:if>
+          </joint>
+        
+          <link name="${prefix}_link_3">
+            <inertial>
+              <origin xyz="0.023829 0.17985 0.0088526"
+                      rpy="0 0 0" />
+              <mass value="${link_3_mass}" />
+              <inertia ixx="0" ixy="0" ixz="0"
+                       iyy="0" iyz="0" izz="0" />
+            </inertial>
+        
+            <visual>
+              <origin xyz="0 0 0"
+                      rpy="0 0 0" />
+              <geometry>
+                <mesh filename="package://multibot_efort/meshes/er20/link_3.STL" />
+              </geometry>
+              <material name="Orange"/>
+            </visual>
+        
+            <collision>
+              <geometry>
+                <mesh filename="package://multibot_efort/meshes/er20/link_3.STL" />
+              </geometry>
+            </collision>
+          </link>
+        
+          <joint name="${prefix}_joint_3" type="revolute">
+            <origin xyz="0 0 0.78" rpy="0 0 0" />
+            <parent link="${prefix}_link_2" />
+            <child link="${prefix}_link_3" />
+            <axis xyz="0 -1 0" />
+
+            <xacro:unless value="${joint_limited}">
+                <limit lower="${-2.0 * pi}" upper="${2.0 *pi}" effort="42" velocity="2.5482" />
+            </xacro:unless>
+            <xacro:if value="${joint_limited}">
+                <limit lower="${link_3_lower_limit}" upper="${link_3_upper_limit}"  effort="42" velocity="2.5482" />
+            </xacro:if>
+          </joint>
+        
+          <link name="${prefix}_link_4">
+            <inertial>
+              <origin xyz="-0.25041 0.15738 -0.91242"
+                      rpy="0 0 0" />
+              <mass value="${link_4_mass}" />
+              <inertia ixx="7.994" ixy="0.1741" ixz="-2.937"
+                       iyy="8.7913" iyz="0.25399" izz="2.7535" />
+            </inertial>
+        
+            <visual>
+              <geometry>
+                <mesh filename="package://multibot_efort/meshes/er20/link_4.STL" />
+              </geometry>
+              <material name="Orange"/>
+            </visual>
+        
+            <collision>
+              <geometry>
+                <mesh filename="package://multibot_efort/meshes/er20/link_4.STL" />
+              </geometry>
+            </collision>
+          </link>
+        
+          <joint name="${prefix}_joint_4" type="revolute">
+            <origin xyz="0.2575 0 0.14"
+                    rpy="0 0 0" />
+            <parent link="${prefix}_link_3" />
+            <child link="${prefix}_link_4" />
+            <axis xyz="1 0 0" />
+            <xacro:unless value="${joint_limited}">
+                <limit lower="${-2.0 * pi}" upper="${2.0 *pi}" effort="42" velocity="6.2832" />
+            </xacro:unless>
+            <xacro:if value="${joint_limited}">
+                <limit lower="${link_4_lower_limit}" upper="${link_4_upper_limit}"  effort="42" velocity="6.2832" />
+            </xacro:if>
+          </joint>
+        
+          <link name="${prefix}_link_5">
+            <inertial>
+              <origin xyz="-0.75291 0.15738 -0.91242"
+                      rpy="0 0 0" />
+              <mass value="${link_5_mass}" />
+              <inertia ixx="7.994" ixy="0.1741" ixz="-2.937"
+                       iyy="8.7913" iyz="0.25399" izz="2.7535" />
+            </inertial>
+        
+            <visual>
+              <geometry>
+                <mesh filename="package://multibot_efort/meshes/er20/link_5.STL" />
+              </geometry>
+              <material name="Orange"/>
+            </visual>
+        
+            <collision>
+              <geometry>
+                <mesh filename="package://multibot_efort/meshes/er20/link_5.STL" />
+              </geometry>
+            </collision>
+          </link>
+        
+          <joint name="${prefix}_joint_5" type="revolute">
+            <origin xyz="0.5025 0 0"
+                    rpy="0 0 0" />
+            <parent link="${prefix}_link_4" />
+            <child link="${prefix}_link_5" />
+            <axis xyz="0 -1 0" />
+            <xacro:unless value="${joint_limited}">
+                <limit lower="${-2.0 * pi}" upper="${2.0 *pi}" effort="42" velocity="6.2832" />
+            </xacro:unless>
+            <xacro:if value="${joint_limited}">
+                <limit lower="${link_5_lower_limit}" upper="${link_5_upper_limit}" effort="42" velocity="6.2832" />
+            </xacro:if>
+          </joint>
+        
+          <link name="${prefix}_link_6">
+            <inertial>
+              <origin xyz="-0.81642 0.15737 -0.91242"
+                      rpy="0 0 0" />
+              <mass value="${link_6_mass}" />
+              <inertia ixx="7.994" ixy="0.1741" ixz="-2.937"
+                       iyy="8.7913" iyz="0.25399" izz="2.7535" />
+            </inertial>
+        
+            <visual>
+              <geometry>
+                <mesh filename="package://multibot_efort/meshes/er20/link_6.STL" />
+              </geometry>
+              <material name="Orange"/>
+            </visual>
+        
+            <collision>
+              <geometry>
+                <mesh filename="package://multibot_efort/meshes/er20/link_6.STL" />
+              </geometry>
+            </collision>
+          </link>
+        
+          <joint name="${prefix}_joint_6" type="revolute">
+            <origin xyz="0.063504 0 0"
+                    rpy="0 0 0" />
+            <parent link="${prefix}_link_5" />
+            <child link="${prefix}_link_6" />
+            <axis xyz="1 0 0" />
+            <xacro:unless value="${joint_limited}">
+                <limit lower="${-2.0 * pi}" upper="${2.0 *pi}" effort="20" velocity="9.5993" />
+            </xacro:unless>
+            <xacro:if value="${joint_limited}">
+                <limit lower="${link_6_lower_limit}" upper="${link_6_upper_limit}" effort="20" velocity="9.5993" />
+            </xacro:if> 
+          </joint>
+    </xacro:macro>    
+</robot>

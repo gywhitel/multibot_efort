@@ -1,0 +1,6 @@
+/home/yinghao/catkin_ws/src/multibot_efort/test/build/CMakeFiles/rebuild_cache.dir
+/home/yinghao/catkin_ws/src/multibot_efort/test/build/CMakeFiles/edit_cache.dir
+/home/yinghao/catkin_ws/src/multibot_efort/test/build/CMakeFiles/kinematics_test.dir
+/home/yinghao/catkin_ws/src/multibot_efort/test/build/CMakeFiles/make_pointcloud.dir
+/home/yinghao/catkin_ws/src/multibot_efort/test/build/CMakeFiles/path_generation.dir
+/home/yinghao/catkin_ws/src/multibot_efort/test/build/CMakeFiles/preprocess.dir

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<xacro:macro name="polishing_tool">
+  <link name="polishing_tool">
+    <inertial>
+      <origin
+        xyz="0.00353630999156922 6.45268012466893E-07 0.0422326873169609"
+        rpy="0 0 0" />
+      <mass value="0.2169540245871" />
+      <inertia
+        ixx="0.00044465109545084"
+        ixy="5.63674253738281E-09"
+        ixz="3.6069547942308E-06"
+        iyy="0.000482096071544166"
+        iyz="-6.84564438717888E-09"
+        izz="0.000330044803901056" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://multibot_efort/meshes/polishing_tool.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://multibot_efort/meshes/polishing_tool.STL" />
+      </geometry>
+    </collision>
+  </link>
+</xacro:macro>
+</robot>

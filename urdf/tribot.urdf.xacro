@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<robot name="assembly" xmlns:xacro="http://wiki.ros.org/xacro" >
+
+    <!-- sai号-->
+    <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+    </material>
+    <material name="Orange">
+        <color rgba="1 0.6 0 1.0"/>
+    </material>
+    <material name="blue">
+        <color rgba="0.4 0.8 0.9 1.0"/>
+    </material>
+
+    <!-- 包含末端工具与桌子描述文件-->
+    <xacro:include filename="$(find multibot_efort)/urdf/env.urdf.xacro" />
+    <!-- polishing tool -->
+    <xacro:include filename="$(find multibot_efort)/urdf/polish_tool.urdf.xacro" />
+    <!-- DH robotics gripper -->
+    <!-- <xacro:include filename="$(find dh_robotics_ag95_description)/urdf/dh_robotics_ag95_gripper.urdf" /> -->
+
+    <!-- 包含机器人描述文件-->
+        <!-- er10-->
+    <!-- <xacro:include filename="$(find multibot_efort)/urdf/er10.urdf.xacro" /> -->
+        <!-- er20-->
+    <xacro:property name="prefix1" value="left"/>
+    <xacro:property name="prefix2" value="right"/>
+    <xacro:property name="prefix3" value="mid"/>
+    <xacro:include filename="$(find multibot_efort)/urdf/er20.urdf.xacro" />
+
+    <!-- 创建机器人-->
+    <!-- <xacro:er10 joint_limited="true" />  -->
+    <xacro:er20 prefix="left" joint_limited="true" />
+    <xacro:er20 prefix="right" joint_limited="true" />
+    <xacro:er20 prefix="mid" joint_limited="true" />
+
+    <!-- 创建末端工具，桌子-->
+    <!-- <xacro:table /> -->
+    <xacro:flange prefix="left" />
+    <xacro:flange prefix="right" />
+    <xacro:polishing_tool/>
+    <!-- TODO embed URDF in xacro -->
+    <!-- <xacro:dh_robotics_ag95_gripper/> -->
+    <!-- <xacro:gun /> -->
+
+    <!-- 工具绑定到机器人末端-->
+        <!-- left flange-->
+    <joint name="${prefix1}_flange_joint" type="fixed">
+        <parent link="${prefix1}_link_6"/>
+        <child link="${prefix1}_flange" />
+        <origin xyz="0.0615 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+        <!-- right flange-->
+    <joint name="${prefix2}_flange_joint" type="fixed">
+        <parent link="${prefix2}_link_6"/>
+        <child link="${prefix2}_flange" />
+        <origin xyz="0.0615 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+        <!-- gun-->
+    <!-- <joint name="gun_joint" type="fixed">
+        <parent link="link_6"/>
+        <child link="gun" />
+        <origin xyz="0.025 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </joint> -->
+    
+    <joint name="polish_tool_fix" type="fixed">  
+        <parent link="${prefix3}_link_6"/>
+        <child link="polishing_tool"/>
+        <origin xyz="0.05 0.0 0.0" rpy="0.0 1.57 0.0"/>
+    </joint>
+
+    <!-- <joint name="gripper_fix" type="fixed">    TODO
+        <parent link="left_flange"/>
+        <child link="dh_robotics_ag95_gripper"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </joint> -->
+
+    <!-- 创建世界坐标系，布局的绝对参考坐标，桌子与世界坐标重合-->
+    <link name="world"/>
+    <!-- <joint name="world_joint" type="fixed"> -->
+        <!-- <parent link="world"/> -->
+        <!-- <child link="table"/> -->
+        <!-- <child link="map"/> -->
+        <!-- <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/> -->
+    <!-- </joint> -->
+    
+        <!-- left er20 robot-->
+    <joint name="${prefix1}_er20_world_joint" type="fixed">
+        <parent link="world"/>
+        <child link="${prefix1}_base_link" />
+        <origin xyz="1.05 -1 0.015" rpy="0.0 0.0 3.1416"/>
+    </joint>
+        <!-- right er20 robot-->
+    <joint name="${prefix2}_er20_world_joint" type="fixed">
+        <parent link="world"/>
+        <child link="${prefix2}_base_link" />
+        <origin xyz="1.05 1 0.015" rpy="0.0 0.0 -3.1416"/>
+    </joint>
+        <!-- er10 robot-->
+    <joint name="${prefix3}_er20_world_joint" type="fixed">
+        <parent link="world"/>
+        <child link="${prefix3}_base_link" />
+        <origin xyz="-1.05 0.0 0.015" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+</robot>
