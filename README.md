@@ -9,4 +9,6 @@ source devel/setup.bash
 roslaunch multibot_efort display.launch
 ```
 运行视频
-<video src="" />
+<video>
+  <source src="https://github.com/gywhitel/multibot_efort/blob/master/triarm.mp4" type="video/mp4">
+</video>
